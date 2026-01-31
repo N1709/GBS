@@ -1,2 +1,3 @@
-# GBS.github.io
-Github Brach Scanner
+# GBS
+
+this is just a github specific repo scanning tool :)
