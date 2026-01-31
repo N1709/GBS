@@ -49,6 +49,3 @@ Github Branch Scanner - A powerful web-based tool to scan and manage default bra
 
 Pure HTML/CSS/JavaScript with GitHub REST API v3
 
-## License
-
-MIT
