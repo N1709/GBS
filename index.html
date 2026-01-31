@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GBS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+            flex-wrap: wrap;
+        }
+
+        .scanner-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 25px;
+            padding: 30px;
+            flex: 1.2;
+            min-width: 320px;
+        }
+
+        .log-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 25px;
+            padding: 20px;
+            flex: 1;
+            min-width: 320px;
+            display: flex;
+            flex-direction: column;
+            max-height: 650px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 10px;
+            color: #555;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 14px 18px;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            border-color: #333;
+        }
+
+        select option {
+            background: #111;
+            color: #fff;
+        }
+
+        .info-box {
+            font-size: 11px;
+            margin-top: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #050505;
+            line-height: 1.5;
+        }
+
+        .advantage { color: #00ff00; }
+        .disadvantage { color: #ff4444; }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 13px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .console {
+            background: #050505;
+            border: 1px solid #151515;
+            border-radius: 12px;
+            padding: 15px;
+            height: 120px;
+            font-family: "SF Mono", "Courier New", monospace;
+            font-size: 12px;
+            color: #ffffff;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .console::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .console::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        .console::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 3px;
+        }
+
+        .log-title {
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .log-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 12px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .log-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .log-list::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        .log-list::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 3px;
+        }
+
+        .log-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #111;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .log-item:last-child {
+            border-bottom: none;
+        }
+
+        .repo-name {
+            flex: 1;
+            word-break: break-all;
+        }
+
+        .status-badge {
+            white-space: nowrap;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .status-none { 
+            color: #444; 
+        }
+
+        .status-badge.has-branch {
+            color: #00ff00;
+        }
+
+        .status-badge.no-branch {
+            color: #ff4444;
+        }
+
+        .stats {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: #050505;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #555;
+            text-transform: uppercase;
+            margin-top: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .waiting-message {
+            color: #555;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #000;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .main-container { 
+                flex-direction: column; 
+            }
+            
+            .log-card { 
+                max-height: 400px; 
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Github Branch Scanner Created By N1709</h1>
+    </div>
+
+    <div class="main-container">
+        <div class="scanner-card">
+            <div class="form-group">
+                <label>Authentication Mode</label>
+                <select id="auth-mode" onchange="updateInfo()">
+                    <option value="anonymous" selected>No Token</option>
+                    <option value="token">With Token (Optional)</option>
+                </select>
+                <div id="info-box" class="info-box">
+                    <span class="disadvantage">Disadvantages:</span> Very low rate limit (60 requests/hour), public repositories only.
+                </div>
+            </div>
+
+            <div class="form-group" id="token-input-group" style="display: none;">
+                <label>GitHub Personal Access Token</label>
+                <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            </div>
+
+            <div class="form-group">
+                <label>Scan Mode</label>
+                <select id="scan-mode" onchange="updateScanMode()">
+                    <option value="single" selected>Single Repository</option>
+                    <option value="all">All Repositories</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="single-repo-group">
+                <label>Username or Organization Name or URL</label>
+                <input type="text" id="single-repo" placeholder="example/repo or https://github.com/example/repo">
+            </div>
+
+            <div class="form-group" id="target-name-group" style="display: none;">
+                <label>Username or Organization Name or URL</label>
+                <input type="text" id="target-name" placeholder="example/repo or https://github.com/example/repo">
+            </div>
+
+            <div class="form-group">
+                <label>Target Branch Name</label>
+                <input type="text" id="branch" placeholder="main">
+            </div>
+
+            <button onclick="startInvestigation()" id="scan-btn">Start Investigation</button>
+
+            <div class="console" id="console-output">
+                Console ready...
+            </div>
+        </div>
+
+        <div class="log-card">
+            <div class="stats" id="stats-section" style="display: none;">
+                <div class="stat-item">
+                    <div class="stat-number" id="total-repos">0</div>
+                    <div class="stat-label">Total Repos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="has-branch">0</div>
+                    <div class="stat-label">Has Branch</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="no-branch">0</div>
+                    <div class="stat-label">No Branch</div>
+                </div>
+            </div>
+
+            <div class="log-title">Scan Logs</div>
+            <ul class="log-list" id="log-list">
+                <li class="waiting-message">Waiting for scan...</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 GBS. All rights reserved.
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            updateInfo();
+            updateScanMode();
+        });
+
+        function updateInfo() {
+            const mode = document.getElementById('auth-mode').value;
+            const infoBox = document.getElementById('info-box');
+            const tokenGroup = document.getElementById('token-input-group');
+
+            if (mode === 'token') {
+                infoBox.innerHTML = '<span class="advantage">Advantages:</span> High rate limit (5000 requests/hour), private repository access supported.';
+                tokenGroup.style.display = 'block';
+            } else {
+                infoBox.innerHTML = '<span class="disadvantage">Disadvantages:</span> Very low rate limit (60 requests/hour), public repositories only.';
+                tokenGroup.style.display = 'none';
+            }
+        }
+
+        function updateScanMode() {
+            const mode = document.getElementById('scan-mode').value;
+            const singleRepoGroup = document.getElementById('single-repo-group');
+            const targetNameGroup = document.getElementById('target-name-group');
+
+            if (mode === 'single') {
+                singleRepoGroup.style.display = 'block';
+                targetNameGroup.style.display = 'none';
+            } else {
+                singleRepoGroup.style.display = 'none';
+                targetNameGroup.style.display = 'block';
+            }
+        }
+
+        function addConsole(message) {
+            const consoleBox = document.getElementById('console-output');
+            consoleBox.innerHTML += message + '<br>';
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+        }
+
+        function parseSingleRepo(input) {
+            input = input.trim();
+            input = input.replace(/\/+$/, '');
+            
+            if (input.includes('github.com/')) {
+                const match = input.match(/github\.com\/([^\/]+)\/([^\/\?\#]+)/);
+                if (match) {
+                    return {
+                        owner: match[1],
+                        repo: match[2].replace(/\.git$/, '')
+                    };
+                }
+            }
+            
+            if (input.includes('/')) {
+                const parts = input.split('/').filter(p => p.length > 0);
+                if (parts.length >= 2) {
+                    return {
+                        owner: parts[0],
+                        repo: parts[1].replace(/\.git$/, '')
+                    };
+                }
+            }
+            
+            return null;
+        }
+
+        function parseUserOrOrg(input) {
+            input = input.trim();
+            input = input.replace(/\/+$/, '');
+            
+            if (input.includes('github.com/')) {
+                const match = input.match(/github\.com\/([^\/\?\#]+)/);
+                if (match && match[1]) {
+                    return match[1];
+                }
+            }
+            
+            if (input.length > 0 && !input.includes('/')) {
+                return input;
+            }
+            
+            return null;
+        }
+
+        function getHeaders() {
+            const mode = document.getElementById('auth-mode').value;
+            const token = document.getElementById('token').value.trim();
+            
+            const headers = {
+                'Accept': 'application/vnd.github.v3+json'
+            };
+
+            if (mode === 'token' && token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            return headers;
+        }
+
+        async function checkSingleRepo(owner, repo, branch) {
+            addConsole(`Checking repository: ${owner}/${repo}`);
+            addConsole(`Target branch: ${branch}`);
+            addConsole('');
+
+            const headers = getHeaders();
+
+            try {
+                addConsole('Fetching repository information...');
+                const repoResponse = await fetch(
+                    `https://api.github.com/repos/${owner}/${repo}`,
+                    { 
+                        headers,
+                        method: 'GET'
+                    }
+                );
+
+                if (!repoResponse.ok) {
+                    if (repoResponse.status === 404) {
+                        throw new Error(`Repository not found: ${owner}/${repo}`);
+                    }
+                    if (repoResponse.status === 403) {
+                        const remaining = repoResponse.headers.get('X-RateLimit-Remaining');
+                        throw new Error(`Rate limit exceeded. Remaining: ${remaining || 0}. Try using a token.`);
+                    }
+                    if (repoResponse.status === 401) {
+                        throw new Error('Invalid token. Please check your GitHub token.');
+                    }
+                    throw new Error(`Failed to fetch repository: ${repoResponse.status} ${repoResponse.statusText}`);
+                }
+
+                const repoData = await repoResponse.json();
+                addConsole(`Repository found: ${repoData.full_name}`);
+                addConsole(`Owner: ${repoData.owner.login}`);
+                addConsole(`Private: ${repoData.private ? 'Yes' : 'No'}`);
+                addConsole('');
+
+                addConsole(`Checking for branch "${branch}"...`);
+                const branchResponse = await fetch(
+                    `https://api.github.com/repos/${owner}/${repo}/branches/${branch}`,
+                    { 
+                        headers,
+                        method: 'GET'
+                    }
+                );
+
+                const hasBranch = branchResponse.ok;
+                
+                const logList = document.getElementById('log-list');
+                logList.innerHTML = '';
+                
+                const li = document.createElement('li');
+                li.className = 'log-item';
+                
+                const repoLabel = repoData.private ? `PRIVATE ${repoData.name}` : repoData.name;
+                
+                if (hasBranch) {
+                    li.innerHTML = `
+                        <span class="repo-name">${repoLabel}</span>
+                        <span class="status-badge has-branch">Branch "${branch}" exists</span>
+                    `;
+                    addConsole(`SUCCESS: Branch "${branch}" found`);
+                } else {
+                    li.innerHTML = `
+                        <span class="repo-name status-none">${repoLabel}</span>
+                        <span class="status-badge no-branch">Branch "${branch}" not found</span>
+                    `;
+                    addConsole(`Branch "${branch}" does not exist in this repository`);
+                }
+                
+                logList.appendChild(li);
+
+                document.getElementById('total-repos').textContent = '1';
+                document.getElementById('has-branch').textContent = hasBranch ? '1' : '0';
+                document.getElementById('no-branch').textContent = hasBranch ? '0' : '1';
+                document.getElementById('stats-section').style.display = 'flex';
+
+                addConsole('');
+                addConsole('Check complete');
+
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        async function detectAccountType(targetName, headers) {
+            try {
+                const userResponse = await fetch(
+                    `https://api.github.com/users/${targetName}`,
+                    { 
+                        headers,
+                        method: 'GET'
+                    }
+                );
+
+                if (userResponse.ok) {
+                    const userData = await userResponse.json();
+                    if (userData.type === 'Organization') {
+                        addConsole(`Detected as Organization: ${targetName}`);
+                        return 'org';
+                    } else {
+                        addConsole(`Detected as User: ${targetName}`);
+                        return 'user';
+                    }
+                } else {
+                    addConsole(`Could not detect type, trying as User first`);
+                    return 'user';
+                }
+            } catch (error) {
+                addConsole(`Auto-detection failed, defaulting to User`);
+                return 'user';
+            }
+        }
+
+        async function scanAllRepos(targetName, branch) {
+            addConsole(`Target: ${targetName}`);
+            addConsole(`Branch: ${branch}`);
+            addConsole('');
+            addConsole('Detecting account type...');
+
+            const headers = getHeaders();
+            const targetType = await detectAccountType(targetName, headers);
+            
+            addConsole(`Type: ${targetType === 'org' ? 'Organization' : 'User'}`);
+            addConsole('Fetching repositories...');
+
+            let repos = [];
+            let page = 1;
+            let hasMore = true;
+            const maxPages = 10;
+
+            const baseUrl = targetType === 'org' 
+                ? `https://api.github.com/orgs/${targetName}/repos`
+                : `https://api.github.com/users/${targetName}/repos`;
+
+            while (hasMore && page <= maxPages) {
+                try {
+                    const response = await fetch(
+                        `${baseUrl}?per_page=100&page=${page}`,
+                        { 
+                            headers,
+                            method: 'GET'
+                        }
+                    );
+
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            throw new Error(`${targetType === 'org' ? 'Organization' : 'User'} not found: ${targetName}`);
+                        }
+                        if (response.status === 403) {
+                            const rateLimitRemaining = response.headers.get('X-RateLimit-Remaining');
+                            throw new Error(`Rate limit exceeded. Remaining: ${rateLimitRemaining || '0'}. Try using a token.`);
+                        }
+                        if (response.status === 401) {
+                            throw new Error('Invalid token. Please check your GitHub token.');
+                        }
+                        throw new Error(`Failed to fetch repos: ${response.status} ${response.statusText}`);
+                    }
+
+                    const pageRepos = await response.json();
+                    
+                    if (pageRepos.message) {
+                        throw new Error(pageRepos.message);
+                    }
+                    
+                    if (!Array.isArray(pageRepos)) {
+                        throw new Error('Invalid response from GitHub API');
+                    }
+                    
+                    repos = repos.concat(pageRepos);
+                    
+                    addConsole(`Loaded ${repos.length} repositories...`);
+                    
+                    if (pageRepos.length < 100) {
+                        hasMore = false;
+                    } else {
+                        page++;
+                    }
+                } catch (error) {
+                    throw error;
+                }
+            }
+
+            if (repos.length === 0) {
+                throw new Error('No repositories found for this user/organization');
+            }
+
+            addConsole(`Total repositories found: ${repos.length}`);
+            addConsole('Checking branches...');
+            addConsole('');
+
+            const logList = document.getElementById('log-list');
+            logList.innerHTML = '';
+            
+            let hasBranchCount = 0;
+            let noBranchCount = 0;
+
+            for (let i = 0; i < repos.length; i++) {
+                const repo = repos[i];
+                
+                try {
+                    const branchResponse = await fetch(
+                        `https://api.github.com/repos/${repo.full_name}/branches/${branch}`,
+                        { 
+                            headers,
+                            method: 'GET'
+                        }
+                    );
+
+                    const hasBranch = branchResponse.ok;
+                    
+                    if (hasBranch) {
+                        hasBranchCount++;
+                    } else {
+                        noBranchCount++;
+                    }
+
+                    const li = document.createElement('li');
+                    li.className = 'log-item';
+                    
+                    const repoLabel = repo.private ? `PRIVATE ${repo.name}` : repo.name;
+                    
+                    if (hasBranch) {
+                        li.innerHTML = `
+                            <span class="repo-name">${repoLabel}</span>
+                            <span class="status-badge has-branch">Has branch</span>
+                        `;
+                    } else {
+                        li.innerHTML = `
+                            <span class="repo-name status-none">${repoLabel}</span>
+                            <span class="status-badge no-branch">No branch</span>
+                        `;
+                    }
+                    
+                    logList.appendChild(li);
+
+                    addConsole(`[${i + 1}/${repos.length}] ${repoLabel}: ${hasBranch ? 'FOUND' : 'NOT FOUND'}`);
+
+                    await new Promise(resolve => setTimeout(resolve, 50));
+
+                } catch (error) {
+                    noBranchCount++;
+                    
+                    const li = document.createElement('li');
+                    li.className = 'log-item';
+                    li.innerHTML = `
+                        <span class="repo-name status-none">${repo.name}</span>
+                        <span class="status-badge no-branch">Error</span>
+                    `;
+                    logList.appendChild(li);
+                }
+            }
+
+            document.getElementById('total-repos').textContent = repos.length;
+            document.getElementById('has-branch').textContent = hasBranchCount;
+            document.getElementById('no-branch').textContent = noBranchCount;
+            document.getElementById('stats-section').style.display = 'flex';
+
+            addConsole('');
+            addConsole(`Scan complete`);
+            addConsole(`Total: ${repos.length} | Has branch: ${hasBranchCount} | No branch: ${noBranchCount}`);
+        }
+
+        async function startInvestigation() {
+            const scanMode = document.getElementById('scan-mode').value;
+            const targetBranch = document.getElementById('branch').value.trim();
+
+            if (!targetBranch) {
+                alert('Please enter target branch name');
+                return;
+            }
+
+            const consoleBox = document.getElementById('console-output');
+            const scanBtn = document.getElementById('scan-btn');
+            
+            consoleBox.innerHTML = '';
+            document.getElementById('log-list').innerHTML = '';
+            document.getElementById('stats-section').style.display = 'none';
+
+            scanBtn.disabled = true;
+            scanBtn.innerHTML = 'SCANNING <span class="loading"></span>';
+
+            const mode = document.getElementById('auth-mode').value;
+            addConsole(`Initializing scan...`);
+            addConsole(`Auth Mode: ${mode === 'token' ? 'Authenticated' : 'Anonymous'}`);
+            addConsole(`Scan Type: ${scanMode === 'single' ? 'Single Repository' : 'All Repositories'}`);
+            addConsole('');
+
+            try {
+                if (scanMode === 'single') {
+                    const singleRepoInput = document.getElementById('single-repo').value.trim();
+                    
+                    if (!singleRepoInput) {
+                        alert('Please enter repository name');
+                        throw new Error('Repository name is required');
+                    }
+
+                    const parsed = parseSingleRepo(singleRepoInput);
+                    
+                    if (!parsed || !parsed.owner || !parsed.repo) {
+                        alert('Invalid repository format. Use: owner/repo or GitHub URL');
+                        throw new Error('Invalid repository format');
+                    }
+
+                    await checkSingleRepo(parsed.owner, parsed.repo, targetBranch);
+                    
+                } else {
+                    const targetInput = document.getElementById('target-name').value.trim();
+
+                    if (!targetInput) {
+                        alert('Please enter username or organization name');
+                        throw new Error('Username/Organization is required');
+                    }
+
+                    const targetName = parseUserOrOrg(targetInput);
+                    
+                    if (!targetName) {
+                        alert('Invalid username or URL format');
+                        throw new Error('Invalid username/organization format');
+                    }
+
+                    await scanAllRepos(targetName, targetBranch);
+                }
+
+            } catch (error) {
+                addConsole(`ERROR: ${error.message}`);
+                
+                let errorMsg = error.message;
+                if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+                    errorMsg = 'Network error. Check your internet connection.';
+                }
+                
+                alert(`Error: ${errorMsg}`);
+            } finally {
+                scanBtn.disabled = false;
+                scanBtn.innerHTML = 'START INVESTIGATION';
+            }
+        }
+    </script>
+</body>
+</html>
