@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GBS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'JetBrains Mono', 'Space Mono', monospace;
             background: #000;
             color: #fff;
             min-height: 100vh;
@@ -26,159 +26,203 @@
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .header h1 {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 11px;
+            color: #555;
+            margin-top: 8px;
+            letter-spacing: 1px;
         }
 
         .main-container {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             width: 100%;
-            max-width: 1100px;
+            max-width: 1200px;
             flex-wrap: wrap;
         }
 
         .scanner-card {
-            background: #0a0a0a;
+            background: linear-gradient(135deg, #0a0a0a 0%, #050505 100%);
             border: 1px solid #1a1a1a;
-            border-radius: 25px;
-            padding: 30px;
+            border-radius: 20px;
+            padding: 35px;
             flex: 1.2;
-            min-width: 320px;
+            min-width: 340px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         .log-card {
-            background: #0a0a0a;
+            background: linear-gradient(135deg, #0a0a0a 0%, #050505 100%);
             border: 1px solid #1a1a1a;
-            border-radius: 25px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 25px;
             flex: 1;
-            min-width: 320px;
+            min-width: 340px;
             display: flex;
             flex-direction: column;
-            max-height: 650px;
+            max-height: 700px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         label {
             display: block;
             font-size: 10px;
-            color: #555;
-            margin-bottom: 8px;
+            color: #666;
+            margin-bottom: 10px;
             text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
         select, input {
             width: 100%;
-            padding: 14px 18px;
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 12px;
+            padding: 15px 20px;
+            background: #0d0d0d;
+            border: 1px solid #252525;
+            border-radius: 10px;
             color: #fff;
             font-size: 13px;
             outline: none;
-            font-family: 'Inter', sans-serif;
-            transition: border-color 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
         }
 
         select:focus, input:focus {
-            border-color: #333;
+            border-color: #3a3a3a;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
         }
 
         select option {
-            background: #111;
+            background: #0d0d0d;
             color: #fff;
         }
 
         .info-box {
             font-size: 11px;
-            margin-top: 8px;
-            padding: 10px;
+            margin-top: 10px;
+            padding: 12px;
             border-radius: 8px;
-            background: #050505;
-            line-height: 1.5;
+            background: #060606;
+            line-height: 1.6;
+            border-left: 3px solid #1a1a1a;
         }
 
-        .advantage { color: #00ff00; }
-        .disadvantage { color: #ff4444; }
+        .advantage { 
+            color: #00ff88;
+            font-weight: 700;
+        }
+        
+        .disadvantage { 
+            color: #ff4466;
+            font-weight: 700;
+        }
 
         button {
             width: 100%;
-            padding: 16px;
-            background: #fff;
+            padding: 18px;
+            background: linear-gradient(135deg, #fff 0%, #ddd 100%);
             color: #000;
             border: none;
-            border-radius: 50px;
+            border-radius: 12px;
             font-weight: 900;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             text-transform: uppercase;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.5px;
+            margin: 25px 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover:not(:disabled):before {
+            left: 100%;
         }
 
         button:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
         }
 
         button:active:not(:disabled) {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
         button:disabled {
-            opacity: 0.5;
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
 
         .console {
-            background: #050505;
-            border: 1px solid #151515;
-            border-radius: 12px;
-            padding: 15px;
-            height: 120px;
-            font-family: "SF Mono", "Courier New", monospace;
-            font-size: 12px;
-            color: #ffffff;
+            background: #030303;
+            border: 1px solid #181818;
+            border-radius: 10px;
+            padding: 18px;
+            height: 140px;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            color: #00ff88;
             overflow-y: auto;
-            line-height: 1.6;
+            line-height: 1.8;
         }
 
         .console::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
 
         .console::-webkit-scrollbar-track {
-            background: #050505;
+            background: #030303;
         }
 
         .console::-webkit-scrollbar-thumb {
             background: #222;
-            border-radius: 3px;
+            border-radius: 4px;
+        }
+
+        .console::-webkit-scrollbar-thumb:hover {
+            background: #333;
         }
 
         .log-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             border-bottom: 1px solid #1a1a1a;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            color: #aaa;
         }
 
         .log-list {
@@ -191,7 +235,7 @@
         }
 
         .log-list::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
 
         .log-list::-webkit-scrollbar-track {
@@ -200,16 +244,17 @@
 
         .log-list::-webkit-scrollbar-thumb {
             background: #222;
-            border-radius: 3px;
+            border-radius: 4px;
         }
 
         .log-item {
-            padding: 10px 0;
-            border-bottom: 1px solid #111;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #141414;
+            transition: background 0.2s ease;
+        }
+
+        .log-item:hover {
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .log-item:last-child {
@@ -219,86 +264,142 @@
         .repo-name {
             flex: 1;
             word-break: break-all;
+            font-size: 11px;
         }
 
         .status-badge {
             white-space: nowrap;
-            font-weight: 600;
-            font-size: 11px;
+            font-weight: 700;
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 6px;
         }
 
         .status-none { 
-            color: #444; 
+            color: #555; 
         }
 
         .status-badge.has-branch {
-            color: #00ff00;
+            color: #000;
+            background: #00ff88;
         }
 
         .status-badge.no-branch {
-            color: #ff4444;
+            color: #000;
+            background: #ff4466;
+        }
+
+        .status-badge.default-branch {
+            color: #000;
+            background: #ffaa00;
+        }
+
+        .branch-list {
+            margin-top: 8px;
+            padding-left: 20px;
+            font-size: 10px;
+            color: #888;
+        }
+
+        .branch-item {
+            padding: 3px 0;
+        }
+
+        .branch-item.is-default {
+            color: #ffaa00;
+            font-weight: 700;
+        }
+
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
 
         .stats {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 18px;
             border-bottom: 1px solid #1a1a1a;
         }
 
         .stat-item {
             flex: 1;
             text-align: center;
-            padding: 10px;
-            background: #050505;
-            border-radius: 8px;
+            padding: 15px;
+            background: #060606;
+            border-radius: 10px;
+            border: 1px solid #111;
         }
 
         .stat-number {
-            font-size: 20px;
-            font-weight: 800;
+            font-size: 26px;
+            font-weight: 900;
             color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         .stat-label {
-            font-size: 10px;
-            color: #555;
+            font-size: 9px;
+            color: #666;
             text-transform: uppercase;
-            margin-top: 5px;
-            letter-spacing: 0.5px;
+            margin-top: 6px;
+            letter-spacing: 0.8px;
         }
 
         .waiting-message {
             color: #555;
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             font-style: italic;
+            font-size: 11px;
         }
 
         footer {
-            margin-top: 30px;
+            margin-top: 40px;
             text-align: center;
-            font-size: 10px;
+            font-size: 9px;
             color: #333;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         .loading {
             display: inline-block;
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             border: 2px solid #000;
             border-top-color: transparent;
             border-radius: 50%;
             animation: spin 0.6s linear infinite;
-            margin-left: 8px;
+            margin-left: 10px;
             vertical-align: middle;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scanner-card, .log-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .log-card {
+            animation-delay: 0.2s;
+            animation-fill-mode: both;
         }
 
         @media (max-width: 768px) {
@@ -307,18 +408,19 @@
             }
             
             .log-card { 
-                max-height: 400px; 
+                max-height: 450px; 
             }
 
             .header h1 {
-                font-size: 18px;
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Github Branch Scanner Created By N1709</h1>
+        <h1>Git Branch Scanner</h1>
+        <p>Scan repositories for specific branches</p>
     </div>
 
     <div class="main-container">
@@ -327,10 +429,10 @@
                 <label>Authentication Mode</label>
                 <select id="auth-mode" onchange="updateInfo()">
                     <option value="anonymous" selected>No Token</option>
-                    <option value="token">With Token (Optional)</option>
+                    <option value="token">With Token (Recommended)</option>
                 </select>
                 <div id="info-box" class="info-box">
-                    <span class="disadvantage">Disadvantages:</span> Very low rate limit (60 requests/hour), public repositories only.
+                    <span class="disadvantage">⚠ Disadvantages:</span> Very low rate limit (60 requests/hour), public repositories only.
                 </div>
             </div>
 
@@ -348,24 +450,19 @@
             </div>
 
             <div class="form-group" id="single-repo-group">
-                <label>Username or Organization Name or URL</label>
-                <input type="text" id="single-repo" placeholder="example/repo or https://github.com/example/repo">
+                <label>Repository (owner/repo or URL)</label>
+                <input type="text" id="single-repo" placeholder="torvalds/linux">
             </div>
 
             <div class="form-group" id="target-name-group" style="display: none;">
-                <label>Username or Organization Name or URL</label>
-                <input type="text" id="target-name" placeholder="example/repo or https://github.com/example/repo">
-            </div>
-
-            <div class="form-group">
-                <label>Target Branch Name</label>
-                <input type="text" id="branch" placeholder="main">
+                <label>Username or Organization</label>
+                <input type="text" id="target-name" placeholder="facebook">
             </div>
 
             <button onclick="startInvestigation()" id="scan-btn">Start Investigation</button>
 
             <div class="console" id="console-output">
-                Console ready...
+                > Console ready...
             </div>
         </div>
 
@@ -376,24 +473,24 @@
                     <div class="stat-label">Total Repos</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" id="has-branch">0</div>
-                    <div class="stat-label">Has Branch</div>
+                    <div class="stat-number" id="total-branches">0</div>
+                    <div class="stat-label">Total Branches</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" id="no-branch">0</div>
-                    <div class="stat-label">No Branch</div>
+                    <div class="stat-number" id="default-branches">0</div>
+                    <div class="stat-label">Default Branches</div>
                 </div>
             </div>
 
             <div class="log-title">Scan Logs</div>
             <ul class="log-list" id="log-list">
-                <li class="waiting-message">Waiting for scan...</li>
+                <li class="waiting-message">Waiting for scan to begin...</li>
             </ul>
         </div>
     </div>
 
     <footer>
-        © 2026 GBS. All rights reserved.
+        © 2026 Git Branch Scanner
     </footer>
 
     <script>
@@ -408,10 +505,10 @@
             const tokenGroup = document.getElementById('token-input-group');
 
             if (mode === 'token') {
-                infoBox.innerHTML = '<span class="advantage">Advantages:</span> High rate limit (5000 requests/hour), private repository access supported.';
+                infoBox.innerHTML = '<span class="advantage">✓ Advantages:</span> High rate limit (5000 requests/hour), private repository access supported.';
                 tokenGroup.style.display = 'block';
             } else {
-                infoBox.innerHTML = '<span class="disadvantage">Disadvantages:</span> Very low rate limit (60 requests/hour), public repositories only.';
+                infoBox.innerHTML = '<span class="disadvantage">⚠ Disadvantages:</span> Very low rate limit (60 requests/hour), public repositories only.';
                 tokenGroup.style.display = 'none';
             }
         }
@@ -432,7 +529,7 @@
 
         function addConsole(message) {
             const consoleBox = document.getElementById('console-output');
-            consoleBox.innerHTML += message + '<br>';
+            consoleBox.innerHTML += '> ' + message + '<br>';
             consoleBox.scrollTop = consoleBox.scrollHeight;
         }
 
@@ -496,9 +593,8 @@
             return headers;
         }
 
-        async function checkSingleRepo(owner, repo, branch) {
+        async function checkSingleRepo(owner, repo) {
             addConsole(`Checking repository: ${owner}/${repo}`);
-            addConsole(`Target branch: ${branch}`);
             addConsole('');
 
             const headers = getHeaders();
@@ -528,21 +624,28 @@
                 }
 
                 const repoData = await repoResponse.json();
+                const defaultBranch = repoData.default_branch;
+                
                 addConsole(`Repository found: ${repoData.full_name}`);
                 addConsole(`Owner: ${repoData.owner.login}`);
                 addConsole(`Private: ${repoData.private ? 'Yes' : 'No'}`);
+                addConsole(`Default Branch: ${defaultBranch}`);
                 addConsole('');
 
-                addConsole(`Checking for branch "${branch}"...`);
-                const branchResponse = await fetch(
-                    `https://api.github.com/repos/${owner}/${repo}/branches/${branch}`,
+                addConsole(`Fetching all branches...`);
+                const branchesResponse = await fetch(
+                    `https://api.github.com/repos/${owner}/${repo}/branches?per_page=100`,
                     { 
                         headers,
                         method: 'GET'
                     }
                 );
 
-                const hasBranch = branchResponse.ok;
+                if (!branchesResponse.ok) {
+                    throw new Error('Failed to fetch branches');
+                }
+
+                const branches = await branchesResponse.json();
                 
                 const logList = document.getElementById('log-list');
                 logList.innerHTML = '';
@@ -550,31 +653,42 @@
                 const li = document.createElement('li');
                 li.className = 'log-item';
                 
-                const repoLabel = repoData.private ? `PRIVATE ${repoData.name}` : repoData.name;
+                const repoLabel = repoData.private ? `🔒 ${repoData.name}` : repoData.name;
                 
-                if (hasBranch) {
-                    li.innerHTML = `
+                let branchesHtml = `
+                    <div class="repo-header">
                         <span class="repo-name">${repoLabel}</span>
-                        <span class="status-badge has-branch">Branch "${branch}" exists</span>
-                    `;
-                    addConsole(`SUCCESS: Branch "${branch}" found`);
-                } else {
-                    li.innerHTML = `
-                        <span class="repo-name status-none">${repoLabel}</span>
-                        <span class="status-badge no-branch">Branch "${branch}" not found</span>
-                    `;
-                    addConsole(`Branch "${branch}" does not exist in this repository`);
-                }
+                        <span class="status-badge default-branch">★ ${defaultBranch}</span>
+                    </div>
+                    <div class="branch-list">
+                `;
                 
+                branches.forEach(branch => {
+                    const isDefault = branch.name === defaultBranch;
+                    branchesHtml += `
+                        <div class="branch-item ${isDefault ? 'is-default' : ''}">
+                            ${isDefault ? '★ ' : '  '} ${branch.name}
+                        </div>
+                    `;
+                });
+                
+                branchesHtml += `</div>`;
+                li.innerHTML = branchesHtml;
                 logList.appendChild(li);
 
+                addConsole(`Found ${branches.length} branches:`);
+                branches.forEach(branch => {
+                    const marker = branch.name === defaultBranch ? '★' : ' ';
+                    addConsole(`${marker} ${branch.name}`);
+                });
+
                 document.getElementById('total-repos').textContent = '1';
-                document.getElementById('has-branch').textContent = hasBranch ? '1' : '0';
-                document.getElementById('no-branch').textContent = hasBranch ? '0' : '1';
+                document.getElementById('total-branches').textContent = branches.length;
+                document.getElementById('default-branches').textContent = '1';
                 document.getElementById('stats-section').style.display = 'flex';
 
                 addConsole('');
-                addConsole('Check complete');
+                addConsole('Check complete ✓');
 
             } catch (error) {
                 throw error;
@@ -610,9 +724,8 @@
             }
         }
 
-        async function scanAllRepos(targetName, branch) {
+        async function scanAllRepos(targetName) {
             addConsole(`Target: ${targetName}`);
-            addConsole(`Branch: ${branch}`);
             addConsole('');
             addConsole('Detecting account type...');
 
@@ -684,89 +797,88 @@
             }
 
             addConsole(`Total repositories found: ${repos.length}`);
-            addConsole('Checking branches...');
+            addConsole('Fetching branches for each repository...');
             addConsole('');
 
             const logList = document.getElementById('log-list');
             logList.innerHTML = '';
             
-            let hasBranchCount = 0;
-            let noBranchCount = 0;
+            let totalBranches = 0;
+            let totalDefaultBranches = repos.length;
 
             for (let i = 0; i < repos.length; i++) {
                 const repo = repos[i];
                 
                 try {
-                    const branchResponse = await fetch(
-                        `https://api.github.com/repos/${repo.full_name}/branches/${branch}`,
+                    const branchesResponse = await fetch(
+                        `https://api.github.com/repos/${repo.full_name}/branches?per_page=100`,
                         { 
                             headers,
                             method: 'GET'
                         }
                     );
 
-                    const hasBranch = branchResponse.ok;
+                    const branches = branchesResponse.ok ? await branchesResponse.json() : [];
+                    const defaultBranch = repo.default_branch;
                     
-                    if (hasBranch) {
-                        hasBranchCount++;
-                    } else {
-                        noBranchCount++;
-                    }
+                    totalBranches += branches.length;
 
                     const li = document.createElement('li');
                     li.className = 'log-item';
                     
-                    const repoLabel = repo.private ? `PRIVATE ${repo.name}` : repo.name;
+                    const repoLabel = repo.private ? `🔒 ${repo.name}` : repo.name;
                     
-                    if (hasBranch) {
-                        li.innerHTML = `
+                    let branchesHtml = `
+                        <div class="repo-header">
                             <span class="repo-name">${repoLabel}</span>
-                            <span class="status-badge has-branch">Has branch</span>
-                        `;
-                    } else {
-                        li.innerHTML = `
-                            <span class="repo-name status-none">${repoLabel}</span>
-                            <span class="status-badge no-branch">No branch</span>
-                        `;
-                    }
+                            <span class="status-badge default-branch">★ ${defaultBranch}</span>
+                        </div>
+                        <div class="branch-list">
+                    `;
                     
+                    branches.forEach(branch => {
+                        const isDefault = branch.name === defaultBranch;
+                        branchesHtml += `
+                            <div class="branch-item ${isDefault ? 'is-default' : ''}">
+                                ${isDefault ? '★ ' : '  '} ${branch.name}
+                            </div>
+                        `;
+                    });
+                    
+                    branchesHtml += `</div>`;
+                    li.innerHTML = branchesHtml;
                     logList.appendChild(li);
 
-                    addConsole(`[${i + 1}/${repos.length}] ${repoLabel}: ${hasBranch ? 'FOUND' : 'NOT FOUND'}`);
+                    addConsole(`[${i + 1}/${repos.length}] ${repoLabel}: ${branches.length} branches (default: ${defaultBranch})`);
 
-                    await new Promise(resolve => setTimeout(resolve, 50));
+                    await new Promise(resolve => setTimeout(resolve, 100));
 
                 } catch (error) {
-                    noBranchCount++;
-                    
                     const li = document.createElement('li');
                     li.className = 'log-item';
                     li.innerHTML = `
-                        <span class="repo-name status-none">${repo.name}</span>
-                        <span class="status-badge no-branch">Error</span>
+                        <div class="repo-header">
+                            <span class="repo-name status-none">${repo.name}</span>
+                            <span class="status-badge no-branch">Error</span>
+                        </div>
                     `;
                     logList.appendChild(li);
+                    addConsole(`[${i + 1}/${repos.length}] ${repo.name}: Error fetching branches`);
                 }
             }
 
             document.getElementById('total-repos').textContent = repos.length;
-            document.getElementById('has-branch').textContent = hasBranchCount;
-            document.getElementById('no-branch').textContent = noBranchCount;
+            document.getElementById('total-branches').textContent = totalBranches;
+            document.getElementById('default-branches').textContent = totalDefaultBranches;
             document.getElementById('stats-section').style.display = 'flex';
 
             addConsole('');
-            addConsole(`Scan complete`);
-            addConsole(`Total: ${repos.length} | Has branch: ${hasBranchCount} | No branch: ${noBranchCount}`);
+            addConsole(`Scan complete ✓`);
+            addConsole(`Total repos: ${repos.length} | Total branches: ${totalBranches} | Default branches: ${totalDefaultBranches}`);
         }
 
         async function startInvestigation() {
             const scanMode = document.getElementById('scan-mode').value;
-            const targetBranch = document.getElementById('branch').value.trim();
-
-            if (!targetBranch) {
-                alert('Please enter target branch name');
-                return;
-            }
 
             const consoleBox = document.getElementById('console-output');
             const scanBtn = document.getElementById('scan-btn');
@@ -800,7 +912,7 @@
                         throw new Error('Invalid repository format');
                     }
 
-                    await checkSingleRepo(parsed.owner, parsed.repo, targetBranch);
+                    await checkSingleRepo(parsed.owner, parsed.repo);
                     
                 } else {
                     const targetInput = document.getElementById('target-name').value.trim();
@@ -817,7 +929,7 @@
                         throw new Error('Invalid username/organization format');
                     }
 
-                    await scanAllRepos(targetName, targetBranch);
+                    await scanAllRepos(targetName);
                 }
 
             } catch (error) {
